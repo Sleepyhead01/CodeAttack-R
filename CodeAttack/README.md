@@ -1,15 +1,20 @@
-# CodeAttack: Code-based Adversarial Attacks for Pre-Trained Programming Language Models
+# Studying Vulnerable Code Entities in R
 
-This repository contains the code for the AAAI 2023 paper [CodeAttack: Code-based Adversarial Attacks for Pre-Trained Programming Language Models](https://arxiv.org/pdf/2206.00052.pdf).
+![codeattack](https://github.com/Sleepyhead01/CodeAttack-R/assets/69421538/afc95115-beb8-45ac-978c-97e861efc7ea)
+
+CodeAttack makes a small change to one token in the input code snippet which causes significant changes to the code
+summary obtained from the SOTA pre-trained programming language models fine-tuned on R
 
 ## Overview
 
-Pre-trained programming language (PL) models (such as CodeT5, CodeBERT, GraphCodeBERT, etc.,) have the potential to automate software engineering tasks involving code understanding and code generation. However, these models operate in the natural channel of code, i.e., they are primarily concerned with the human understanding of the code. They are not robust to changes in the input and thus, are potentially susceptible to adversarial attacks in the natural channel. We propose, CodeAttack, a simple yet effective blackbox attack model that uses code structure to generate effective, efficient, and imperceptible adversarial code samples and demonstrates the vulnerabilities of the state-of-the-art PL models to code-specific adversarial attacks. We evaluate the transferability of CodeAttack on several code-code (translation and repair) and code-NL (summarization) tasks across different programming languages. CodeAttack outperforms state-of-the-art adversarial NLP attack models to achieve the best overall drop in performance while being more efficient, imperceptible, consistent, and fluent. 
+Pre-trained Code Language Models (Code-PLMs) have shown many advancements and achieved state-of-the-art results for many software engineering tasks in the past few years. These models are mainly targeted for popular programming languages such as Java and Python, leaving out many other ones like R. Though R has a wide community of developers and users, there is little known about the applicability of Code-PLMs for R. In this preliminary study, we aim to investigate the vulnerability of Code-PLMs for code entities in R. For this purpose, we use an R dataset of code and comment pairs and then apply CodeAttack, a black-box attack model that uses the structure of code to generate adversarial code samples. We investigate how the model can attack different entities in R. This is the first step towards understanding the importance of R token types, compared to popular programming languages (e.g., Java). We limit our study to code 
+summarization. Our results show that the most vulnerable code entity is the identifier, followed by some syntax tokens specific to R. The results can shed light on the importance of token types and help in developing models for code
+summarization and method name prediction for the R language.
 
 
 ## Run
 
-Change the path to dataset in the ```config_data.yaml```. The parameters and task can be changed from ```config_summary.yaml``` or ```config_translate.yaml```.
+Change the path to dataset in the ```config_data.yaml```. The parameters and task can be changed from ```config_summary.yaml```
 
 To install the dependencies please execute the command ```pip install -r requirements.txt```. To run the code, please execute ```python codeattack.py ``` with the following arguments(optional):
 
@@ -26,18 +31,18 @@ To install the dependencies please execute the command ```pip install -r require
 |--use_imp | A boolean flag to either attack random words or attack only important/vulnerable words|
 |--theta | The percentage of tokens to attack|
 
+## Analysis
+
+On running ```python codeattack.py``` the result files are generated as <no. of samples>.json.
+Use this file to run the ```RAnalysis.ipynb``` to generate the importance and normalised plots.
+
+![image](https://github.com/Sleepyhead01/CodeAttack-R/assets/69421538/4c80fb09-bfd3-4d11-860b-fffb526ecd78)
+
+![image](https://github.com/Sleepyhead01/CodeAttack-R/assets/69421538/edabd364-ee61-4cd2-9872-ad8c2ee50664)
 
 
+This repository is heavily inspired by the code for the AAAI 2023 paper [CodeAttack: Code-based Adversarial Attacks for Pre-Trained Programming Language Models](https://arxiv.org/pdf/2206.00052.pdf).
 
 Code for this repository has been adapted from [CodeXGLUE](https://github.com/microsoft/CodeXGLUE), [CodeBERT)[https://github.com/microsoft/CodeBERT], and [TextFooler](https://github.com/jind11/TextFooler).
 
-## Citation
 
-```
-@article{jha2023codeattack,
-  title={Codeattack: Code-based adversarial attacks for pre-trained programming language models},
-  author={Jha, Akshita and Reddy, Chandan K},
-  journal={Proceedings of the AAAI Conference on Artificial Intelligence},
-  year={2023}
-  }
-```
